@@ -5,7 +5,7 @@ title: '第5期-CG提取'
 tags: ["视频", "CG", "官方"]
 ---
 
-为了节省带宽，视频均经过压制（720p），原片（其实超过分）请访问[本站仓库](/repo)  
+为了节省带宽，视频均经过压制（720p），越长的压得越厉害，原片请访问[本站仓库](/repo)  
 
 f和m分别代表女主(**F**emale)和男主(**M**ale)，参见[命名文档](/doc/系统命名法/)
 
@@ -119,9 +119,9 @@ f和m分别代表女主(**F**emale)和男主(**M**ale)，参见[命名文档](/d
 
 <p media-caption>CS_Chap03_Act330_m：向死而生（告别；变身）</p>
 
-<video controls preload="metadata"  src="/collection/流萤-mihoyo-CG-CS_Chap03_Act450_f_若我不曾见过太阳.mkv"></video>
-
 ## 再见，匹诺康尼
+
+<video controls preload="metadata"  src="/collection/流萤-mihoyo-CG-CS_Chap03_Act450_f_若我不曾见过太阳.mkv"></video>
 
 <p media-caption>CS_Chap03_Act450_f：若我不曾见过太阳</p>
 
