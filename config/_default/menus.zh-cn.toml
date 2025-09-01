@@ -1,0 +1,79 @@
+# -- Main Menu --
+[[main]]
+  name = "主站"
+  pageRef = "/"
+  weight = 1
+  identifier = "home-icon"
+
+[[main]]
+  name = "纯美的宫殿"
+  weight = 10
+
+[[main]]
+  name = "帖子存档"
+  parent = "纯美的宫殿"
+  pageRef = "posts"
+  weight = 10
+
+[[main]]
+  name = "收藏集"
+  parent = "纯美的宫殿"
+  pageRef = "collection"
+  weight = 20
+
+[[main]]
+  name = "图片"
+  parent = "纯美的宫殿"
+  pageRef = "post_picture"
+  weight = 30
+
+[[main]]
+  name = "壁纸推荐"
+  parent = "纯美的宫殿"
+  pageRef = "post_wallpaper"
+  weight = 40
+
+[[main]]
+  name = "视频"
+  parent = "纯美的宫殿"
+  pageRef = "post_video"
+  weight = 50
+
+[[main]]
+  name = "游戏语音"
+  parent = "纯美的宫殿"
+  pageRef = "post_voice"
+  weight = 60
+
+[[main]]
+  name = "语音合成（待接入）"
+  parent = "纯美的宫殿"
+  pageRef = "post_voicegen"
+  weight = 70
+
+[[main]]
+  name = "本站仓库（123网盘）"
+  parent = "纯美的宫殿"
+  pageRef = "repo"
+  weight = 1000
+
+[[main]]
+  name = "标签与分类"
+  pageRef = "tags"
+  weight = 30
+
+[[main]]
+  name = "殿堂的铭文"
+  pageRef = "about"
+  weight = 30
+
+# -- Footer Menu --
+[[footer]]
+  name = "帖子存档"
+  pageRef = "posts"
+  weight = 10
+
+[[footer]]
+  name = "标签与分类"
+  pageRef = "tags"
+  weight = 20

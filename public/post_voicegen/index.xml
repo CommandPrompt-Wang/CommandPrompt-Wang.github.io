@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>语音合成 on 流萤厨的小窝</title>
+    <link>http://localhost:1313/post_voicegen/</link>
+    <description>Recent content in 语音合成 on 流萤厨的小窝</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <copyright>© 2025 命令提示符@CommandPrompt-Wang</copyright>
+    <atom:link href="http://localhost:1313/post_voicegen/index.xml" rel="self" type="application/rss+xml" />
+    
+  </channel>
+</rss>

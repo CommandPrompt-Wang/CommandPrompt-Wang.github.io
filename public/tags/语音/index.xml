@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>语音 on 流萤厨的小窝</title>
+    <link>http://localhost:1313/tags/%E8%AF%AD%E9%9F%B3/</link>
+    <description>Recent content in 语音 on 流萤厨的小窝</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <copyright>© 2025 命令提示符@CommandPrompt-Wang</copyright>
+    <lastBuildDate>Sun, 31 Aug 2025 23:36:25 +0800</lastBuildDate><atom:link href="http://localhost:1313/tags/%E8%AF%AD%E9%9F%B3/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>第7期-剧情语音</title>
+      <link>http://localhost:1313/posts/%E7%AC%AC7%E6%9C%9F-%E5%89%A7%E6%83%85%E8%AF%AD%E9%9F%B3/</link>
+      <pubDate>Sun, 31 Aug 2025 23:36:25 +0800</pubDate>
+      
+      <guid>http://localhost:1313/posts/%E7%AC%AC7%E6%9C%9F-%E5%89%A7%E6%83%85%E8%AF%AD%E9%9F%B3/</guid>
+      <description></description>
+      <media:content xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:1313/posts/%E7%AC%AC7%E6%9C%9F-%E5%89%A7%E6%83%85%E8%AF%AD%E9%9F%B3/featured.jpg" />
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,117 @@
+{{ $image := resources.Get (.Get "img") }}
+{{ if not $image }}
+  {{ $image = resources.GetMatch (printf "**%s*" (.Get "img")) }}
+{{ end }}
+
+{{ if $image }}
+  {{ $width := default "100%" (.Get "width") }}
+  {{ $caption := default "" (.Get "caption") }}
+  
+  <div class="preview-image-container" style="width: {{ $width }};">
+    <img src="{{ $image.RelPermalink }}" 
+         alt="{{ $image.Name }}" 
+         class="preview-image"
+         loading="lazy">
+    
+    {{ if or $caption $image.Name }}
+    <p class="media-caption">
+      {{ if $caption }}{{ $caption }}{{ else }}{{ $image.Name }}{{ end }}
+      <span class="file-size" data-file-size-container data-file-url="{{ $image.RelPermalink }}">
+        <span class="loading-text">(计算大小中...)</span>
+      </span>
+    </p>
+    {{ end }}
+  </div>
+
+  <style>
+    .preview-image-container {
+      margin: 1rem 0;
+      text-align: center;
+    }
+    
+    .preview-image {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .media-caption {
+      margin-top: 0.5rem;
+      font-size: 0.9rem;
+      color: #666;
+    }
+    
+    .file-size {
+      font-size: 0.8em;
+      color: #999;
+    }
+  </style>
+{{ else }}
+  <div class="preview-image-error">
+    错误: 无法找到图片 "{{ .Get "img" }}"
+  </div>
+  
+  <style>
+    .preview-image-error {
+      padding: 1rem;
+      background-color: #ffebee;
+      color: #c62828;
+      border-radius: 8px;
+      margin: 1rem 0;
+    }
+  </style>
+{{ end }}
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const fetchFileSize = (fileUrl, container) => {
+    const loadingElement = container.querySelector('.loading-text');
+    if (loadingElement) {
+      loadingElement.textContent = '(计算大小中...)';
+    }
+    
+    fetch(fileUrl, { method: 'HEAD' })
+      .then(response => {
+        if (response.ok) {
+          const size = response.headers.get('content-length');
+          if (size) {
+            displayFileSize(size, container);
+          } else {
+            throw new Error('无法获取文件大小');
+          }
+        } else {
+          throw new Error('文件请求失败');
+        }
+      })
+      .catch(error => {
+        console.error('获取文件大小失败:', error);
+        if (loadingElement) {
+          loadingElement.textContent = '(大小未知)';
+        }
+      });
+  };
+
+  const displayFileSize = (sizeBytes, container) => {
+    const sizes = ['B', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(sizeBytes) / Math.log(1024));
+    const size = (sizeBytes / Math.pow(1024, i)).toFixed(i > 0 ? 1 : 0);
+    
+    const sizeElement = container.querySelector('.loading-text') || document.createElement('span');
+    sizeElement.textContent = `(${size} ${sizes[i]})`;
+    sizeElement.classList.remove('loading-text');
+    
+    if (!container.contains(sizeElement)) {
+      container.appendChild(sizeElement);
+    }
+  };
+
+  const containers = document.querySelectorAll('[data-file-size-container]');
+  containers.forEach(container => {
+    const fileUrl = container.getAttribute('data-file-url');
+    if (fileUrl) {
+      fetchFileSize(fileUrl, container);
+    }
+  });
+});
+</script>

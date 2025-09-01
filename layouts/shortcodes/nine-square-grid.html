@@ -1,0 +1,26 @@
+{{ $images := split .Params.images "," }}
+{{ $nonEmptyImages := slice }}
+{{ range $images }}
+  {{ $trimmed := trim . " " }}
+  {{ if ne $trimmed "" }}
+    {{ $nonEmptyImages = $nonEmptyImages | append $trimmed }}
+  {{ end }}
+{{ end }}
+{{ $imagesToUse := first 9 $nonEmptyImages }}
+{{ $imageCount := len $imagesToUse }}
+{{ $spacing := default 3 (int .Params.spacing) }}
+{{ $size := div (sub 100 (mul $spacing 2)) 3 }}
+
+<div class="nine-square-grid" style="display: grid; grid-template-columns: repeat(3, {{ $size }}%); gap: {{ $spacing }}%; width: 100%; box-sizing: border-box;">
+  {{ range $index, $img := $imagesToUse }}
+    <div class="grid-item" style="position: relative; width: 100%; padding-bottom: 100%; border-radius: 4px; overflow: hidden;">
+      <img src="{{ $img }}" alt="Gallery image {{ add $index 1 }}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; border-radius: 4px;">
+    </div>
+  {{ end }}
+ 
+  {{ $emptyBoxes := sub 9 $imageCount }}
+  {{ range seq $emptyBoxes }}
+    <div class="grid-item empty" style="padding-bottom: 100%; border: 1px dashed #ccc; background: #fafafa; border-radius: 4px;"></div>
+  {{ end }}
+</div>
+</br>

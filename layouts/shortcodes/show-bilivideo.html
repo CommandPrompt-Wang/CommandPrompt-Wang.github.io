@@ -1,0 +1,25 @@
+{{- /* 获取参数 */ -}}
+{{- $bvid := .Get "bvid" | default "" -}}
+{{- $width := .Get "width" | default "100%" -}}
+{{- $ratio := .Get "ratio" | default "16:9" -}}
+
+{{- /* 计算 padding-bottom 百分比 */ -}}
+{{- $ratioParts := split $ratio ":" -}}
+{{- $aspectRatio := 56.25 -}}
+{{- if eq (len $ratioParts) 2 -}}
+  {{- $widthPart := float (index $ratioParts 0) -}}
+  {{- $heightPart := float (index $ratioParts 1) -}}
+  {{- $aspectRatio = div (mul $heightPart 100) $widthPart -}}
+{{- end -}}
+
+{{- /* 构建嵌入代码 */ -}}
+<div style="position: relative; padding-bottom: {{ $aspectRatio }}%; height: 0; overflow: hidden;">
+  <iframe src="//player.bilibili.com/player.html?bvid={{ $bvid }}" 
+          scrolling="no" 
+          border="0" 
+          frameborder="no" 
+          framespacing="0" 
+          allowfullscreen="true" 
+          style="position: absolute; top: 0; left: 0; width: {{ $width }}; height: 100%;">
+  </iframe>
+</div>

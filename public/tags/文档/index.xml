@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>文档 on 流萤厨的小窝</title>
+    <link>http://localhost:1313/tags/%E6%96%87%E6%A1%A3/</link>
+    <description>Recent content in 文档 on 流萤厨的小窝</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <copyright>© 2025 命令提示符@CommandPrompt-Wang</copyright>
+    <lastBuildDate>Fri, 29 Aug 2025 11:45:31 +0800</lastBuildDate><atom:link href="http://localhost:1313/tags/%E6%96%87%E6%A1%A3/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>说明：文件资源系统命名法</title>
+      <link>http://localhost:1313/doc/%E7%B3%BB%E7%BB%9F%E5%91%BD%E5%90%8D%E6%B3%95/</link>
+      <pubDate>Fri, 29 Aug 2025 11:45:31 +0800</pubDate>
+      
+      <guid>http://localhost:1313/doc/%E7%B3%BB%E7%BB%9F%E5%91%BD%E5%90%8D%E6%B3%95/</guid>
+      <description></description>
+      
+    </item>
+    
+  </channel>
+</rss>

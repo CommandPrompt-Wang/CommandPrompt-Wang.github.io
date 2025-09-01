@@ -1,0 +1,27 @@
+{{ $videos := where .Site.RegularPages "Params.tags" "intersect" (slice "视频") }}
+
+<div class="video-posts-container">
+    {{ if $videos }}
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {{ range $videos }}
+                <article class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
+                    {{ with .Params.featuredImage }}
+                        <img src="{{ . }}" alt="{{ $.Title }}" class="w-full h-48 object-cover">
+                    {{ end }}
+                    <div class="p-4">
+                        <h3 class="text-xl font-semibold mb-2">
+                            <a href="{{ .RelPermalink }}" class="hover:text-primary-600">{{ .Title }}</a>
+                        </h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">{{ .Description | default .Summary }}</p>
+                        <div class="flex items-center justify-between">
+                            <time class="text-sm text-gray-500">{{ .Date.Format "2006-01-02" }}</time>
+                            <a href="{{ .RelPermalink }}" class="text-primary-600 hover:underline">阅读更多</a>
+                        </div>
+                    </div>
+                </article>
+            {{ end }}
+        </div>
+    {{ else }}
+        <p class="text-center text-gray-500 py-8">找不到喵~</p>
+    {{ end }}
+</div>

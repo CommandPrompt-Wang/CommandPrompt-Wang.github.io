@@ -1,0 +1,19 @@
+{{/* 从站点配置中获取链接 */}}
+{{ $links := .Site.Params.Author.links }}
+{{/* 这是一个示例，检查是否成功获取到链接 */}}
+{{/* {{ printf "%#v" $links }} */}} 
+
+{{ if $links }}
+<p class="text-sm text-neutral-500 dark:text-neutral-400">
+    <!-- 左边添加"关注我"文字 -->
+    <span class="mr-2">关注我：</span>
+    
+    {{ range $link_group := $links }}
+        {{ range $name, $url := $link_group }}
+            <a class="inline-block mx-1 hover:text-primary-500 dark:hover:text-primary-400" href="{{ $url }}" target="_blank" rel="noopener noreferrer me" aria-label="{{ $name | title }}">
+                {{- partial "icon.html" $name -}}
+            </a>
+        {{ end }}
+    {{ end }}
+</p>
+{{ end }}

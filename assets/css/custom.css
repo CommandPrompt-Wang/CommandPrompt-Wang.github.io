@@ -1,0 +1,22 @@
+[data-subtitle] {
+    display: block;
+    text-align: right;
+    font-size: 1.1rem;
+    margin-top: -0.5rem;
+    color: #6b7280;
+    font-weight: normal;
+}
+
+[media-caption] {
+  text-align: center; /* 居中 */
+  color: #888; /* 灰色 */
+  font-size: 0.9em; /* 小字 */
+  margin-top: 0.5em; /* 与上方元素的间距 */
+  margin-bottom: 1.5em; /* 与下一个元素的间距 */
+  font-family: inherit; /* 继承字体 */
+  line-height: 1.4;
+}
+
+.logo {
+    max-width: 150px !important;
+}

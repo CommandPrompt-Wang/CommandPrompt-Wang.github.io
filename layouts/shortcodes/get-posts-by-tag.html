@@ -1,0 +1,27 @@
+{{/* 获取指定标签的文章 */}}
+{{ $tag := .Get "tag" | default "视频" }}
+{{ $limit := .Get "limit" | default 12 }}
+{{ $view := .Get "view" | default "card" }}
+
+{{ $taggedPages := where site.RegularPages "Params.tags" "intersect" (slice $tag) }}
+{{ $taggedPages = $taggedPages | first $limit }}
+
+{{ if $taggedPages }}
+  {{ if eq $view "card" }}
+    <div class="grid grid-cols-1 gap-4 lg:grid-cols-3 lg:gap-4">
+      {{ range $taggedPages }}
+        {{ partial "article-link/card.html" . }}
+      {{ end }}
+    </div>
+  {{ else if eq $view "list" }}
+    <div class="space-y-8">
+      {{ range $taggedPages }}
+        {{ partial "article-link/list.html" . }}
+      {{ end }}
+    </div>
+  {{ end }}
+{{ else }}
+  <div class="text-center py-10">
+    <p class="text-gray-500 dark:text-gray-400">什么{{ $tag }}都没有喵~</p>
+  </div>
+{{ end }}

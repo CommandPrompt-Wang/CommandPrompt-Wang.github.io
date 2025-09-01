@@ -1,0 +1,211 @@
+{{ $currentDir := .Page.File.Dir }}
+{{ $resources := .Page.Resources }}
+{{ $images := $resources.ByType "image" }}
+{{ $videos := $resources.ByType "video" }}
+{{ $otherFiles := where $resources "ResourceType" "not in" (slice "image" "video") }}
+
+<div class="collection-gallery" data-gallery-container>
+  <!-- 文件夹导航 -->
+  <div class="mb-8">
+    <h3 class="text-xl font-semibold mb-4">目录导航</h3>
+    <div class="flex flex-wrap gap-2">
+      {{ range readDir (printf "content/%s" $currentDir) }}
+        {{ if .IsDir }}
+          <a href="{{ .Name | urlize }}/" 
+             class="folder-item px-3 py-1 bg-white dark:bg-neutral-700 rounded-md text-sm border border-neutral-200 dark:border-neutral-600 hover:shadow-md transition">
+            📁 {{ .Name }}
+          </a>
+        {{ end }}
+      {{ end }}
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- 图片展示 -->
+  {{ if $images }}
+    <div class="mb-8">
+      <h3 class="text-xl font-semibold mb-4">图片</h3>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+        {{ range $images }}
+          {{ $thumbnail := .Fill "600x338 center webp q80" }}
+          <a href="{{ .RelPermalink }}" target="_blank" rel="noopener noreferrer"
+             class="image-container block rounded-lg overflow-hidden shadow-md bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 hover:shadow-lg transition"
+             data-file-url="{{ .RelPermalink }}">
+            <div class="relative">
+              <img src="{{ $thumbnail.RelPermalink }}" alt="{{ .Name }}" 
+                   class="w-full h-48 object-cover pointer-events-none" 
+                   loading="lazy">
+              <!-- 覆盖层，防止图片被直接点击 -->
+              <div class="absolute inset-0 bg-transparent"></div>
+            </div>
+            <div class="p-3">
+              <p class="text-sm font-medium truncate text-neutral-700 dark:text-neutral-300">{{ .Name }}</p>
+              <div class="file-size text-xs text-neutral-500 dark:text-neutral-400 mt-1" data-file-size-container>
+                <span class="loading-text">计算大小中...</span>
+              </div>
+            </div>
+          </a>
+        {{ end }}
+      </div>
+    </div>
+  {{ end }}
+
+   <hr>
+
+  <!-- 视频展示 -->
+  {{ if $videos }}
+    <div class="mb-8">
+      <h3 class="text-xl font-semibold mb-4">视频</h3>
+      <div class="grid grid-cols-1 gap-4">
+        {{ range $videos }}
+          <div class="rounded-lg overflow-hidden shadow-md bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700">
+            <video class="w-full" controls preload="metadata">
+              <source src="{{ .RelPermalink }}" type="video/mp4">
+              您的浏览器不支持视频标签。
+            </video>
+            <div class="p-3">
+              <p class="text-sm font-medium text-neutral-700 dark:text-neutral-300">{{ .Name }}</p>
+              <div class="file-size text-xs text-neutral-500 dark:text-neutral-400 mt-1" data-file-size-container data-file-url="{{ .RelPermalink }}">
+                <span class="loading-text">计算大小中...</span>
+              </div>
+            </div>
+          </div>
+        {{ end }}
+      </div>
+    </div>
+  {{ end }}
+
+   <hr>
+
+    <!-- 其他文件展示 -->
+  {{ if $otherFiles }}
+    <div class="mb-8">
+      <h3 class="text-xl font-semibold mb-4">其他文件</h3>
+      <div class="flex flex-wrap gap-2">
+        {{ range $otherFiles }}
+          <a href="{{ .RelPermalink }}" 
+             class="file-item block px-4 py-2 bg-white dark:bg-neutral-700 rounded-lg shadow-sm border border-neutral-200 dark:border-neutral-600 hover:bg-neutral-50 dark:hover:bg-neutral-600 transition"
+             data-file-url="{{ .RelPermalink }}">
+            <p class="text-sm font-medium text-neutral-700 dark:text-neutral-300 truncate">{{ .Name }}</p>
+            <div class="file-size text-xs text-neutral-500 dark:text-neutral-400 mt-1" data-file-size-container>
+              <span class="loading-text">计算大小中...</span>
+            </div>
+          </a>
+        {{ end }}
+      </div>
+    </div>
+  {{ end }}
+
+  <!-- 空状态提示 -->
+  {{ if not (or $images $videos $otherFiles) }}
+    <div class="text-center py-12 text-neutral-500 dark:text-neutral-400">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6m-3-3v6m-9 1V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+      </svg>
+      <p>此目录暂无内容</p>
+    </div>
+  {{ end }}
+</div>
+
+<style>
+.file-item:hover {
+  transform: translateY(-2px);
+}
+
+.image-container {
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.image-container:hover {
+  transform: translateY(-4px);
+}
+
+.file-size {
+  min-height: 1.25rem;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // 懒加载文件大小
+  const loadFileSizes = () => {
+    const fileContainers = document.querySelectorAll('[data-file-size-container]');
+    
+    // 使用Intersection Observer实现懒加载
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const container = entry.target;
+            const fileUrl = container.getAttribute('data-file-url') || 
+                            container.closest('[data-file-url]').getAttribute('data-file-url');
+            fetchFileSize(fileUrl, container);
+            observer.unobserve(container);
+          }
+        });
+      }, { rootMargin: '100px' });
+      
+      fileContainers.forEach(container => {
+        observer.observe(container);
+      });
+    } else {
+      // 不支持Intersection Observer的回退方案
+      fileContainers.forEach(container => {
+        const fileUrl = container.getAttribute('data-file-url') || 
+                        container.closest('[data-file-url]').getAttribute('data-file-url');
+        fetchFileSize(fileUrl, container);
+      });
+    }
+  };
+
+  // 获取文件大小
+  const fetchFileSize = (fileUrl, container) => {
+    // 显示加载状态
+    const loadingElement = container.querySelector('.loading-text');
+    if (loadingElement) {
+      loadingElement.textContent = '计算大小中...';
+    }
+    
+    // 使用HEAD请求获取文件大小
+    fetch(fileUrl, { method: 'HEAD' })
+      .then(response => {
+        if (response.ok) {
+          const size = response.headers.get('content-length');
+          if (size) {
+            displayFileSize(size, container);
+          } else {
+            throw new Error('无法获取文件大小');
+          }
+        } else {
+          throw new Error('文件请求失败');
+        }
+      })
+      .catch(error => {
+        console.error('获取文件大小失败:', error);
+        if (loadingElement) {
+          loadingElement.textContent = '大小未知';
+        }
+      });
+  };
+
+  // 格式化并显示文件大小
+  const displayFileSize = (sizeBytes, container) => {
+    const sizes = ['B', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(sizeBytes) / Math.log(1024));
+    const size = (sizeBytes / Math.pow(1024, i)).toFixed(i > 0 ? 1 : 0);
+    
+    const sizeElement = container.querySelector('.loading-text') || document.createElement('span');
+    sizeElement.textContent = `${size} ${sizes[i]}`;
+    sizeElement.classList.remove('loading-text');
+    
+    if (!container.contains(sizeElement)) {
+      container.appendChild(sizeElement);
+    }
+  };
+
+  // 初始化
+  loadFileSizes();
+});
+</script>
